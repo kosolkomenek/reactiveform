@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { FormArray } from '@angular/forms';
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'app-groubform',
@@ -10,7 +11,8 @@ import { FormArray } from '@angular/forms';
   styleUrls: ['./groubform.component.css']
 })
 export class GroubformComponent implements OnInit {
-    
+  public data ={ "name": "kosol", "lastname":"komenek"};//test
+  configUrl = 'http://localhost:4201/test';
   profileForm = this.fb.group({
     firstName: ['',[Validators.required,Validators.minLength(4)]],
     lastName: [''],
@@ -30,13 +32,19 @@ export class GroubformComponent implements OnInit {
     return this.profileForm.get('aliases') as FormArray;
   }
 
-  constructor(private fb: FormBuilder) { }
-
+  constructor(private fb: FormBuilder, 
+    private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.http
+    .post(this.configUrl,this.data).subscribe(); 
   }
   onSubmit() {
-    console.log(this.profileForm.controls['firstName'].value)
+    this.data.name = this.profileForm.controls['firstName'].value
+    this.data.lastname = this.profileForm.controls['lastName'].value
+    console.log(this.data);
+    this.http
+    .post(this.configUrl,this.data).subscribe();;
   }
   updateProfile() {
     this.profileForm.patchValue({
@@ -49,4 +57,5 @@ export class GroubformComponent implements OnInit {
   addAlias() {
     this.aliases.push(this.fb.control(''));
   }
+
 }

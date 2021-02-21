@@ -12,7 +12,7 @@ export class ConfigService {
   constructor(private http: HttpClient) { }
 
   configUrl = 'http://localhost:4201';
-
+  
   httpOptions = {
     headers: new HttpHeaders({
       'content-type': 'application/json'
@@ -22,4 +22,6 @@ export class ConfigService {
   getConfig():Observable  <FormModel>{
      return this.http.get<FormModel>(this.configUrl);
   }
+
+
 }

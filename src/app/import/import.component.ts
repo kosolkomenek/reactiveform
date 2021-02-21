@@ -12,9 +12,8 @@ export class ImportComponent implements OnInit {
   constructor(public ConfigService: ConfigService) { }
 
   ngOnInit(): void {
-        this.ConfigService.getConfig().subscribe((data:{})=>{
-          this.names = data
-          console.log(data)
+        this.ConfigService.getConfig().subscribe((data:{} )=>{
+          this.names = data;
         })
   }
 }
